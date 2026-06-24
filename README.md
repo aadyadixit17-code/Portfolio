@@ -3,7 +3,7 @@
 Welcome to my personal digital portfolio website! This project is a uniquely styled, highly interactive, fully responsive frontend showcase featuring a dense, twinkling starfield layout and multi-layered performance metrics. 
 
 ## 🚀 Live Preview
-🔗 *Live Link:* [https://YOUR-SUBDOMAIN.vercel.app](https://YOUR-SUBDOMAIN.vercel.app) (Vercel link setup karne ke baad yahan replace kar lena)
+🔗 *Live Link:* https://portfolio-omega-seven-rph8xa3dsm.vercel.app/
 
 ---
 
