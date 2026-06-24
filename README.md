@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# 🌌 Cosmic Space Portfolio - Aadya Dixit
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to my personal digital portfolio website! This project is a uniquely styled, highly interactive, fully responsive frontend showcase featuring a dense, twinkling starfield layout and multi-layered performance metrics. 
 
-## Available Scripts
+## 🚀 Live Preview
+🔗 *Live Link:* [https://YOUR-SUBDOMAIN.vercel.app](https://YOUR-SUBDOMAIN.vercel.app) (Vercel link setup karne ke baad yahan replace kar lena)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🛠️ Tech Stack & Key Architectures
+* *Frontend Library:* React.js Core Engine
+* *Styles & Animations:* Custom CSS Keyframes & Fluid Grid Modules
+* *Interactions:* Lightweight Scroll Detection Engine (0% Lag Optimization)
+* *Form Automation:* Connected to Formspree API for Instant Email Redirection & Database Query Log Syncing
+* *Media Assets:* Embedded Dynamic HTML5 Background Transmissions
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## ✨ Primary Sections Included
+1. *Home/Hero Hub:* Features an avatar glow-ring, quick access download triggers for my official resume, and floating structural orbit rings mapping core expertise icons.
+2. *About Panel:* Detailed breakdown tracing my engineering path, problem-solving mindset, and collaborative communication values.
+3. *Skills Branch:* Segmented micro-cards for Core Technical Architecture, Tools/Frameworks, and Key Soft Skills.
+4. *Experience Matrix:* Tracks full-stack engineering milestones and AI virtual internships with grade records.
+5. *Certificates & Achievements:* Verifiable data view grids containing industry credentials from IBM, GeeksforGeeks, and national hackathon challenges.
+6. *Projects Portal:* Interactive showcase layout linking directly to structural repository branches.
+7. *Contact Outpost:* Active transmission form utilizing state-driven lifecycle handling for input collection.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Local Development & Deployment Workflow
 
-### `npm run build`
+To launch this control hub locally, install the necessary dependencies and trigger the server environment:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+# Clone the repository structure
+git clone [https://github.com/aadyadixit17-code/portfolio.git](https://github.com/aadyadixit17-code/portfolio.git)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+# Step into the frontend working directory
+cd frontend
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Install package architecture
+npm install
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Deploy local server environment
+npm start
