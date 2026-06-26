@@ -2,15 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import './App.css'; 
 
 function App() {
-  // Track entry and hold the audio track safely
-  const [hasEntered, setHasEntered] = useState(false);
-  const audioRef = useRef(null);
-
-  // Form states matching lines 496-511 from the image
+  // Contact Form States
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [formStatus, setFormStatus] = useState(''); // 'SUCCESS' or 'ERROR'
+  const [formStatus, setFormStatus] = useState(''); // 'SUCCESS', 'ERROR', or ''
+
+  // Track entry and hold the audio track safely
+  const [hasEntered, setHasEntered] = useState(false);
+  const audioRef = useRef(null);
 
   // LIGHTWEIGHT SCROLL DETECTION ENGINE (0% Lag, Infinite Re-trigger)
   useEffect(() => {
@@ -36,37 +36,24 @@ function App() {
     return () => window.removeEventListener('scroll', handleScrollReveal);
   }, []);
 
-  // Activate the music on click
-  const handleEnterSpace = () => {
-    setHasEntered(true);
-
-    if (!audioRef.current) {
-      audioRef.current = new Audio(process.env.PUBLIC_URL + '/audio.mpeg');
-      audioRef.current.loop = true;
-    }
-
-    audioRef.current.play()
-      .then(() => console.log("Audio playing!"))
-      .catch((err) => console.log("Playback blocked:", err));
-  };
-
-  // Database storage and email notification submission handler
+  // Form Submission Handler connecting to Formspree API (Email + Database)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     
-    // APNA FORM LINK YAHAN SUBMIT KIJIYE (e.g., Formspree, Web3Forms, or custom MERN backend endpoint)
-    const FORM_ENDPOINT = "YAHAN_APNA_FORM_LINK_DAALEIN"; 
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('message', message);
 
     try {
-      const response = await fetch(FORM_ENDPOINT, {
+      const response = await fetch("https://formspree.io/f/xjgqgozy", {
         method: "POST",
+        body: formData,
         headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({ name, email, message })
+          'Accept': 'application/json'
+        }
       });
-
+      
       if (response.ok) {
         setFormStatus('SUCCESS');
         setName('');
@@ -76,9 +63,22 @@ function App() {
         setFormStatus('ERROR');
       }
     } catch (error) {
-      console.error("Submission Error:", error);
       setFormStatus('ERROR');
     }
+  };
+
+  // Activate the music on click
+  const handleEnterSpace = () => {
+    setHasEntered(true);
+
+    if (!audioRef.current) {
+      audioRef.current = new Audio('/audio.mpeg');
+      audioRef.current.loop = true;
+    }
+
+    audioRef.current.play()
+      .then(() => console.log("Audio playing!"))
+      .catch((err) => console.log("Playback blocked:", err));
   };
 
   return (
@@ -118,7 +118,7 @@ function App() {
       <header id="home" className="space-hero">
         <div className="hero-left">
           <div className="avatar-glow-ring">
-            <img src={process.env.PUBLIC_URL + '/Aadya Dixit.jpeg'} alt="Aadya Dixit" className="avatar-content" />
+            <img src="Aadya Dixit.jpeg" alt="Aadya Dixit" className="avatar-content" />
           </div>
           
           <h1 className="hero-title scroll-reveal-target heading-bounce">
@@ -131,7 +131,7 @@ function App() {
           
           <div className="hero-actions">
             <a href="#projects" className="btn-neon-primary scroll-reveal-target box-bounce">View Projects</a>
-            <a href={process.env.PUBLIC_URL + '/AADYA DIXIT Resume.pdf'} download className="btn-neon-secondary scroll-reveal-target box-bounce">Download Resume</a>
+            <a href="AADYA DIXIT Resume.pdf" download className="btn-neon-secondary scroll-reveal-target box-bounce">Download Resume</a>
           </div>
 
           <div className="social-links-row">
@@ -161,16 +161,14 @@ function App() {
       </header>
 
       {/* About Section */}
-      <section id="about" className="content-panel" style={{ padding: '2rem 8% 1rem 8%' }}>
-        <h2 className="section-title scroll-reveal-target heading-bounce">About Me</h2>
+              <section id="about" className="content-panel" >
+            <h2 className="section-title scroll-reveal-target heading-bounce">About Me</h2>
         <div className="neon-card-panel scroll-reveal-target box-bounce">
           <p className="panel-text">
             I am a Final Year Engineering Student at IMS Engineering College (IMSEC), Ghaziabad, with a strong passion for technology, innovation, and continuous learning. As a Computer Science enthusiast, I am currently in the early phase of my professional journey, actively exploring and strengthening my skills in software development and modern web technologies.
-            <br /><br />
             I have hands-on experience with HTML, CSS, C, C++, JavaScript, Python, and the MERN Stack, and I enjoy building projects that help me apply theoretical concepts to real-world problems. I am continuously learning new technologies, improving my coding practices, and expanding my understanding of full-stack development.
             <br /><br />
             As an aspiring Software Engineer and Tech Enthusiast, I believe in learning by building. I regularly work on personal and academic projects, contribute to my GitHub repositories, and explore innovative solutions through practical implementation. My interests include web development, emerging technologies, problem-solving, and creating user-focused digital experiences.
-            <br /><br />
             Beyond technical skills, I value teamwork, communication, adaptability, time management, and a growth mindset. I enjoy collaborating with others, sharing ideas, and learning from new challenges. My goal is to keep evolving as a developer, transform ideas into impactful solutions, and contribute meaningfully to the ever-changing world of technology.
             <br /><br />
             Turning curiosity into learning, learning into projects, and projects into real-world impact.
@@ -179,10 +177,10 @@ function App() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="content-panel" style={{ padding: '1rem 8% 2rem 8%' }}>
+      <section id="skills" className="content-panel" >
         <h2 className="section-title scroll-reveal-target heading-bounce">Skills & Expertise</h2>
         
-        <div className="skills-container-layout" style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', maxWidth: '900px' }}>
+        <div className="skills-container-layout" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '900px' }}>
           
           {/* Category 1: Technical Core */}
           <div className="skills-branch">
@@ -274,7 +272,7 @@ function App() {
             {/* Left Column: Certificate Image Display */}
             <div style={{ width: '100%', borderRadius: '8px', overflow: 'hidden', border: '1px solid #a855f7', boxShadow: '0 0 15px rgba(168, 85, 247, 0.2)' }}>
               <img 
-                src={process.env.PUBLIC_URL + '/certificate aicte.jpeg'} 
+                src="certificate aicte.jpeg" 
                 alt="AICTE EduSkills Celonis Virtual Internship Certificate" 
                 style={{ width: '100%', height: 'auto', display: 'block' }} 
               />
@@ -333,13 +331,13 @@ function App() {
           <p className="timeline-date"> Computer Science Undergraduate 2023-2027</p>
         </div> 
         <br></br>
-        <div className="neon-card-panel scroll-reveal-target box-bounce">
+         <div className="neon-card-panel scroll-reveal-target box-bounce">
           <span className="degree-tag">Senior Secondary (12th)</span>
           <h4 className="institution-title">St. Marys's Christian School, Sahibabad</h4>
           <p className="timeline-date"> Completed senior secondary education through two academic tracks (PCB and PCM), demonstrating interdisciplinary academic preparation and self-driven learning </p>
         </div>
         <br></br>
-        <div className="neon-card-panel scroll-reveal-target box-bounce">
+         <div className="neon-card-panel scroll-reveal-target box-bounce">
           <span className="degree-tag">Secondary School (10th)</span>
           <h4 className="institution-title">St. Marys's Christian School, Sahibabad</h4>
           <p className="timeline-date">Completed secondary education with a strong foundation in core subjects.</p>
@@ -355,7 +353,7 @@ function App() {
           {/* Certificate 1: IBM */}
           <div className="neon-card-panel spec-padding scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1rem' }}>
-              <img src={process.env.PUBLIC_URL + '/IBM.jpeg'} alt="IBM Getting Started with Artificial Intelligence Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <img src="IBM.jpeg" alt="IBM Getting Started with Artificial Intelligence Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <h4 style={{ color: '#38bdf8', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Getting Started with Artificial Intelligence</h4>
             <p style={{ color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.5rem' }}>Issued by: IBM SkillsBuild (Jun 10, 2026)</p>
@@ -367,7 +365,7 @@ function App() {
           {/* Certificate 2: GeeksforGeeks */}
           <div className="neon-card-panel spec-padding scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1rem' }}>
-              <img src={process.env.PUBLIC_URL + '/GFG.jpeg'} alt="GeeksforGeeks Workshop Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <img src="GFG.jpeg" alt="GeeksforGeeks Workshop Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <h4 style={{ color: '#38bdf8', fontSize: '1.1rem', marginBottom: '0.5rem' }}>Exclusive One-Day Offline Workshop</h4>
             <p style={{ color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.5rem' }}>Issued by: GeeksforGeeks Classroom Center & Nation SkillUp</p>
@@ -379,7 +377,7 @@ function App() {
           {/* Certificate 3: SAMAGRA 2026 */}
           <div className="neon-card-panel spec-padding scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
             <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1rem' }}>
-              <img src={process.env.PUBLIC_URL + '/ITS.jpeg'} alt="SAMAGRA 2026 Participation Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <img src="ITS.jpeg" alt="SAMAGRA 2026 Participation Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
             <h4 style={{ color: '#38bdf8', fontSize: '1.1rem', marginBottom: '0.5rem' }}>SAMAGRA - 2026: Brain Bytes</h4>
             <p style={{ color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.5rem' }}>Institute of Technology & Science, Ghaziabad (Apr 10, 2026)</p>
@@ -401,7 +399,7 @@ function App() {
           <div className="neon-card-panel scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(168, 85, 247, 0.3)', marginBottom: '1.2rem', boxShadow: '0 0 10px rgba(168, 85, 247, 0.1)' }}>
-                <img src={process.env.PUBLIC_URL + '/SDGI.jpeg'} alt="SDGI Global University SGU Hackathon 2.0 Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="SDGI.jpeg" alt="SDGI Global University SGU Hackathon 2.0 Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               <h4 style={{ color: '#38bdf8', fontSize: '1.15rem', marginBottom: '0.4rem' }}>🏆 SGU Hackathon 2.0-2026</h4>
               <p style={{ color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.75rem' }}>SDGI Global University | Team: Code Divas (Mar 20-21, 2026)</p>
@@ -415,7 +413,7 @@ function App() {
           <div className="neon-card-panel scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <div>
               <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(168, 85, 247, 0.3)', marginBottom: '1.2rem', boxShadow: '0 0 10px rgba(168, 85, 247, 0.1)' }}>
-                <img src={process.env.PUBLIC_URL + '/IMSUC.jpeg'} alt="IMS Ghaziabad BUG S.E.N.S.E of HACK-A-THON -2K26 Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="IMSUC.jpeg" alt="IMS Ghaziabad BUG S.E.N.S.E of HACK-A-THON -2K26 Certificate" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               <h4 style={{ color: '#38bdf8', fontSize: '1.15rem', marginBottom: '0.4rem' }}>💻 BUG S.E.N.S.E of HACK-A-THON -2K26</h4>
               <p style={{ color: '#a855f7', fontSize: '0.85rem', fontWeight: '600', marginBottom: '0.75rem' }}>Department of Computer Science, IMS Ghaziabad (Apr 7, 2026)</p>
@@ -438,7 +436,7 @@ function App() {
           <div className="neon-card-panel project-detail-hero scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
             <div>
               <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(56, 189, 248, 0.3)', marginBottom: '1.2rem', boxShadow: '0 0 12px rgba(56, 189, 248, 0.15)' }}>
-                <img src={process.env.PUBLIC_URL + '/portfolio.png'} alt="Personal Portfolio Screenshot Overview" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="/portfolio.png" alt="Personal Portfolio Screenshot Overview" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
               
               <h3 className="proj-title" style={{ fontSize: '1.35rem', color: '#fff', margin: '0 0 0.5rem 0' }}>PERSONAL PORTFOLIO WEBSITE</h3>
@@ -452,9 +450,10 @@ function App() {
               </div>
             </div>
             <div className="proj-action-links" style={{ display: 'flex', gap: '12px' }}>
-              <a href="https://github.com/aadyadixit17-code/Portfolio" target="_blank" rel="noreferrer" className="btn-neon-mini" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
+              <a href="https://github.com/aadyadixit17-code/Student-Portfolio" target="_blank" rel="noreferrer" className="btn-neon-mini" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
                 <i className="fab fa-github"></i> GitHub Access
               </a>
+              
             </div>
           </div>
 
@@ -462,7 +461,7 @@ function App() {
           <div className="neon-card-panel project-detail-hero scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%' }}>
             <div>
               <div style={{ width: '100%', borderRadius: '6px', overflow: 'hidden', border: '1px solid rgba(168, 85, 247, 0.3)', marginBottom: '1.2rem', boxShadow: '0 0 12px rgba(168, 85, 247, 0.15)' }}>
-                <img src={process.env.PUBLIC_URL + '/volunteer.png'} alt="Volunteer Registration System Dashboard UI Overview" style={{ width: '100%', height: 'auto', display: 'block' }} />
+                <img src="volunteer.png" alt="Volunteer Registration System Dashboard UI Overview" style={{ width: '100%', height: 'auto', display: 'block' }} />
               </div>
 
               <h3 className="proj-title" style={{ fontSize: '1.35rem', color: '#fff', margin: '0 0 0.5rem 0' }}>VOLUNTEER REGISTRATION SYSTEM</h3>
@@ -479,74 +478,86 @@ function App() {
               <a href="https://github.com/aadyadixit17-code/Volunteer-Registration-System" target="_blank" rel="noreferrer" className="btn-neon-mini" style={{ padding: '8px 16px', fontSize: '0.85rem' }}>
                 <i className="fab fa-github"></i> Source Code
               </a>
+              
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* Restored Functional Contact Form Section (Matching Image Layout Exactly) */}
+      {/* Contact Section */}
       <section id="contact" className="content-panel">
         <h2 className="section-title scroll-reveal-target heading-bounce">Contact</h2>
-        <div className="contact-section-inner" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '2rem', maxWidth: '600px', margin: '0 auto' }}>
-          <div className="contact-form-column">
-            <form onSubmit={handleFormSubmit} className="neon-card-panel scroll-reveal-target box-bounce">
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                <label style={{ color: '#38bdf8', fontSize: '0.9rem', textAlign: 'left' }}>Your Name</label>
-                <input 
-                  type="text" 
-                  value={name} 
-                  onChange={(e) => setName(e.target.value)} 
-                  required 
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56,189,248,0.2)', padding: '10px', borderRadius: '6px', color: '#fff' }}
-                />
-              </div>
+        <div className="contact-container" style={{ maxWidth: '600px', margin: '0 auto' }}>
+          <form onSubmit={handleFormSubmit} className="neon-card-panel scroll-reveal-target box-bounce" style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', textAlign: 'left' }}>
+              <label style={{ color: '#38bdf8', fontSize: '0.9rem' }}>Name</label>
+              <input 
+                type="text" 
+                name="name"
+                value={name} 
+                onChange={(e) => setName(e.target.value)} 
+                required 
+                style={{ padding: '10px', borderRadius: '4px', border: '1px solid rgba(56, 189, 248, 0.4)', background: 'rgba(15, 23, 42, 0.6)', color: '#fff' }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', textAlign: 'left' }}>
+              <label style={{ color: '#38bdf8', fontSize: '0.9rem' }}>Email</label>
+              <input 
+                type="email" 
+                name="email"
+                value={email} 
+                onChange={(e) => setEmail(e.target.value)} 
+                required 
+                style={{ padding: '10px', borderRadius: '4px', border: '1px solid rgba(56, 189, 248, 0.4)', background: 'rgba(15, 23, 42, 0.6)', color: '#fff' }}
+              />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', textAlign: 'left' }}>
+              <label style={{ color: '#38bdf8', fontSize: '0.9rem' }}>Message</label>
+              <textarea 
+                rows="5" 
+                name="message"
+                value={message} 
+                onChange={(e) => setMessage(e.target.value)} 
+                required 
+                style={{ padding: '10px', borderRadius: '4px', border: '1px solid rgba(56, 189, 248, 0.4)', background: 'rgba(15, 23, 42, 0.6)', color: '#fff', resize: 'vertical' }}
+              ></textarea>
+            </div>
+            <button type="submit" className="btn-neon-primary" style={{ marginTop: '0.5rem', alignSelf: 'flex-start', border: 'none', cursor: 'pointer' }}>
+              Send Message
+            </button>
 
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                <label style={{ color: '#38bdf8', fontSize: '0.9rem', textAlign: 'left' }}>Your Email</label>
-                <input 
-                  type="email" 
-                  value={email} 
-                  onChange={(e) => setEmail(e.target.value)} 
-                  required 
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56,189,248,0.2)', padding: '10px', borderRadius: '6px', color: '#fff' }}
-                />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginBottom: '1.5rem' }}>
-                <label style={{ color: '#38bdf8', fontSize: '0.9rem', textAlign: 'left' }}>Message</label>
-                <textarea 
-                  value={message} 
-                  onChange={(e) => setMessage(e.target.value)} 
-                  required 
-                  rows="5"
-                  style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56,189,248,0.2)', padding: '10px', borderRadius: '6px', color: '#fff', resize: 'vertical' }}
-                />
-              </div>
-
-              <button type="submit" className="btn-neon-primary" style={{ padding: '12px 24px', width: '100%', cursor: 'pointer' }}>
-                Submit Message
-              </button>
-
-              {formStatus === 'SUCCESS' && (
-                <p style={{ color: '#22c55e', fontSize: '0.95rem', marginTop: '1rem', fontWeight: '600' }}>Message sent successfully!</p>
-              )}
-              {formStatus === 'ERROR' && (
-                <p style={{ color: '#ef4444', fontSize: '0.95rem', marginTop: '1rem', fontWeight: '600' }}>Failed to send message. Please check endpoint link configuration.</p>
-              )}
-
-            </form>
-          </div>
+            {formStatus === 'SUCCESS' && (
+              <p style={{ color: '#22c55e', fontSize: '0.95rem', marginTop: '0.5rem', fontWeight: '500' }}>
+                ✓ Message sent successfully! It has been recorded.
+              </p>
+            )}
+            {formStatus === 'ERROR' && (
+              <p style={{ color: '#ef4444', fontSize: '0.95rem', marginTop: '0.5rem', fontWeight: '500' }}>
+                ✕ Outpost transmission failed. Please try again or reach out directly via email.
+              </p>
+            )}
+          </form>
         </div>
       </section>
 
       {/* Footer Area */}
-      <footer className="space-footer" style={{ textAlign: 'center', padding: '2rem', borderTop: '1px solid rgba(255,255,255,0.05)', color: '#64748b', fontSize: '0.9rem' }}>
-        <p>&copy; Aadya Dixit<br></br> +91-9315808067</p>
+      <footer style={{ padding: '2rem', textAlign: 'center', color: '#64748b', fontSize: '0.9rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+        <p>Aadya Dixit <br></br> +91-9315808067</p>
       </footer>
     </div>
   );
 }
 
 export default App;
+
+
+      
+
+      
+
+
+      
+
+
+      

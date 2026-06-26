@@ -252,7 +252,7 @@ body {
    5. FIXED SCROLL ENGINE WITH PURPLE HEADINGS & NEON BOXES
    ========================================================================== */
 .content-panel { 
-  padding: 2.5rem 8%; 
+  padding: 1rem 8%; 
   position: relative; 
   z-index: 1; 
 }
@@ -261,7 +261,7 @@ body {
   font-size: 2.2rem; 
   font-weight: 700; 
   color: #a855f7; 
-  margin-bottom: 2.5rem; 
+  margin-bottom: 1.25rem; 
   display: inline-block; 
 }
 
@@ -519,4 +519,86 @@ body {
   background-color: #a855f7;
   box-shadow: 0 0 25px #a855f7, 0 0 45px rgba(168, 85, 247, 0.6);
 }
+/* ==========================================================================
+   THE PERMANENT SOLUTION: NO-LAG SMOOTH JUMP ENGINE
+   ========================================================================== */
 
+/* 1. Reset everything to be 100% visible so gaps can NEVER form */
+.scroll-reveal-target, 
+.heading-bounce, 
+.box-bounce {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
+  animation: none !important;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease !important;
+}
+
+/* 2. Instant Pure Physics Jump on Viewport Trigger without lag */
+.scroll-reveal-target.animate-active,
+.heading-bounce.animate-active,
+.box-bounce.animate-active {
+  transform: translateY(-8px) scale(1.01) !important;
+}
+
+/* 3. Extra Dynamic Interactive Jump (Whenever user moves cursor over sections) */
+.neon-card-panel:hover,
+.skill-capsule-neon:hover,
+section:hover .heading-bounce {
+  transform: translateY(-12px) scale(1.02) !important;
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.4) !important;
+}
+/* ==========================================================================
+   ULTIMATE MOBILE & TABLET RESPONSIVE OVERRIDE (MAX-WIDTH: 768px)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  
+  /* 1. Force all dual-columns (like Hero grid) into a single tight column */
+  .space-hero, 
+  .grid-2-col, 
+  [class*="grid"], 
+  [class*="container"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 2rem !important;
+    padding: 4rem 1.2rem 2rem 1.2rem !important;
+  }
+
+  /* 2. Fix layout width overflows - stops horizontal scrolling */
+  body, html, #root {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+
+  /* 3. Scale down heavy neon card paddings so content fits perfectly */
+  .neon-card-panel {
+    padding: 1.5rem 1rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 4. Make heavy typography readable and crisp on small screens */
+  h1, .hero-title, [class*="title"] {
+    font-size: 2.2rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2, .section-heading {
+    font-size: 1.8rem !important;
+  }
+
+  /* 5. Clean up lists and capsules so they stretch properly */
+  .skill-capsule-neon {
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1rem !important;
+  }
+
+  /* 6. Smooth interactive transitions for mobile touch taps */
+  .neon-card-panel:active,
+  .skill-capsule-neon:active {
+    transform: translateY(-5px) scale(1.01) !important;
+  }
+}
